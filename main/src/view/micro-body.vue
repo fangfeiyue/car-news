@@ -9,7 +9,7 @@
 
 <script>
 import Loading from './loading.vue';
-// import { loading } from '@/store';
+import { loading } from '@/store';
 export default {
   name: 'micro-body',
   components: {
@@ -17,9 +17,7 @@ export default {
   },
   setup() {
     return {
-      loading: false,
-      // loadingStatus: loading.loadingStatus,
-      loadingStatus: true
+      loadingStatus: loading.loadingStatus,
     };
   },
 };
