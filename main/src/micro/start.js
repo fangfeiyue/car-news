@@ -1,11 +1,19 @@
 import { setAppList, getAppList } from '@/micro/const/subApps.js'
 import { currentApp } from './utils/index'
 import { rewriteRouter } from './router/rewriteRouter'
+import { setMainLifecycle } from './const/mainLifeCycle'
 
 rewriteRouter()
 
-export const registerMicroApp = (appList) => {
+export const registerMicroApp = (appList, lifeCycle) => {
   setAppList(appList)
+  lifeCycle.beforeLoad[0]()
+
+  setTimeout(() => {
+    lifeCycle.mounted[0]()
+  }, 3000);
+  
+  setMainLifecycle(lifeCycle)
 }
 
 export const start = () => {
