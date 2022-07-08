@@ -1,5 +1,6 @@
 import { findAppByRoute } from '../utils'
 import { getMainLifeCycle } from '../const/mainLifeCycle'
+import { loadHtml } from '../loader'
 
 export const lifeCycle = async () => {
   // 上一个子应用
@@ -22,11 +23,15 @@ export const lifeCycle = async () => {
 
 const beforeLoad = async (app) => {
   await runMainLifeCycle('beforeLoad')
+  
   app && app.beforeLoad && app.beforeLoad()
+  
+  const subApp = await loadHtml(app)
+  // TODO: 这里为什么还要调用 beforeLoad 方法
+  console.log('subApp', subApp, app)
+  subApp && subApp.beforeLoad && subApp.beforeLoad()
 
-  const appContext = null
-
-  return appContext
+  return subApp
 }
 
 const mounted = async (app) => {
