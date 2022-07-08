@@ -30,6 +30,4 @@ export const start = () => {
     window.history.pushState('', '', url)
     window.__CURRENT_SUB_APP__ = app.activeRule
   }
-
-  console.log(app, '---')
 }

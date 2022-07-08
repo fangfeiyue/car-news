@@ -6,13 +6,11 @@ export const registerApp = list => {
     beforeLoad: [
       () => {
         loading.openLoading()
-        console.log('beforeLoad')
       }
     ],
     mounted: [
       () => {
         loading.closeLoading()
-        console.log('mounted')
       }
     ],
     destroyed: [
@@ -20,6 +18,6 @@ export const registerApp = list => {
         console.log('destroyed')
       }
     ]
-})
+  })
   start()
 }

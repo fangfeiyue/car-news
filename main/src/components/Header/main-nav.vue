@@ -89,7 +89,6 @@ export default {
       if (item.url === route.fullPath) return
 
       currentIndex.value = index
-      console.log(currentIndex.value)
       router.push(`${item.url}`)
     }
 
