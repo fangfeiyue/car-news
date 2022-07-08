@@ -1,4 +1,4 @@
 let lifeCycle = {}
 
-export const getLifeCycle = () => lifeCycle
+export const getMainLifeCycle = () => lifeCycle
 export const setMainLifecycle = data => lifeCycle = data
