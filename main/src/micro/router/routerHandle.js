@@ -1,7 +1,8 @@
 import { isTurnApp } from '../utils/index'
+import { lifeCycle } from '../lifeCycle'
 
-export const turnApp = () => {
+export const turnApp = async () => {
   if (isTurnApp()) {
-    console.log('路由切换')
+    await lifeCycle()
   }
 }
