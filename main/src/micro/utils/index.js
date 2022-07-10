@@ -22,15 +22,32 @@ const _filterApp = (key, val) => {
 }
 
 export const isTurnApp = () => {
+  // window.__ORIGIN_APP__ = window.__CURRENT_SUB_APP__
+  
+  // if (window.__CURRENT_SUB_APP__ === window.location.pathname) return false
+  
+  // const currentApp = window.location.pathname.match(/(\/\w+)/)
+
+  // if (!currentApp) return
+
+  // window.__CURRENT_SUB_APP__ = currentApp[0]
+  // console.log( window.__CURRENT_SUB_APP__, window.__ORIGIN_APP__)
+
+  // return true
+
+  // ----
+  const { pathname } = window.location
+  let prefix = pathname.match(/(\/\w+)/)
+  
+  if (prefix) prefix = prefix[0]
+
   window.__ORIGIN_APP__ = window.__CURRENT_SUB_APP__
-  
-  if (window.__CURRENT_SUB_APP__ === window.location.pathname) return false
-  
-  const currentApp = window.location.pathname.match(/(\/\w+)/)
 
-  if (!currentApp) return
+  if (window.__CURRENT_SUB_APP__ === prefix) return false
 
-  window.__CURRENT_SUB_APP__ = currentApp[0]
+  if (!prefix) return
+
+  window.__CURRENT_SUB_APP__ = prefix
 
   return true
 }

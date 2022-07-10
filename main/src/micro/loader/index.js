@@ -1,3 +1,4 @@
+import { performScriptByEval } from '../sanBox'
 import { fetchResource } from '../utils/fetchResource'
 
 export const loadHtml = async (app) => {
@@ -12,20 +13,19 @@ export const loadHtml = async (app) => {
 
   ctx.innerHTML = dom
 
+  script.forEach(item => performScriptByEval(item))
+
   return app
 }
 
 const _parseHtml = async (entry) => {
-  // TODO: 替换 写死的测试地址
-  const html = await fetchResource('http://localhost:8080/vue3#/index' || entry)
+  const html = await fetchResource(entry)
 
   // TODO: 为什么要创建div？
   const div = document.createElement('div')
   div.innerHTML = html
 
-  // TODO: 去掉测试用的//localhost:8080
-  // const [ dom, scriptSrc, script ] = await _getResources(div, entry)
-  const [ dom, scriptSrc, script ] = await _getResources(div, '//localhost:8080')
+  const [ dom, scriptSrc, script ] = await _getResources(div, entry)
   const fetchScripts = await Promise.all(scriptSrc.map(async item => await fetchResource(item)))
   
   const allScripts = script.concat(fetchScripts)
@@ -61,8 +61,8 @@ const _getResources = async (root, entry) => {
     if (element.nodeName.toLowerCase() === 'link') {
       const href = element.getAttribute('href')
 
-      if (href) {
-        if (href.endsWith('.js') && href.startsWith('http')) {
+      if (href.endsWith('.js')) {
+        if (href.startsWith('http')) {
           scriptSrc.push(href)
         } else {
           scriptSrc.push(`http:${entry}${href}`)

@@ -20,14 +20,19 @@ export const start = () => {
   const apps = getAppList()
 
   if (!apps.length) throw Error('子应用列表为空，请正确注册')
-
+  
   const app = currentApp()
+  const { pathname, hash } = window.location
 
-  if (app) {
-    const { pathname, hash } = window.location
+  if (!hash) {
+    window.history.pushState(null, null, '/vue3#/index')
+  }
+
+  if (app && hash) {
+    alert(1111)
     const url = pathname + hash
     
-    window.history.pushState('', '', url)
     window.__CURRENT_SUB_APP__ = app.activeRule
+    window.history.pushState('', '', url)
   }
 }
