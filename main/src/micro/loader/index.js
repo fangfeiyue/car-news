@@ -1,11 +1,10 @@
-import { performScriptByEval } from '../sanBox'
+import { sandBox } from '../sanBox/index'
 import { fetchResource } from '../utils/fetchResource'
 
 export const loadHtml = async (app) => {
   const { container, entry } = app
 
   const [dom, script] = await _parseHtml(entry)
-  console.log(script)
 
   const ctx = document.querySelector(container)
   
@@ -13,7 +12,7 @@ export const loadHtml = async (app) => {
 
   ctx.innerHTML = dom
 
-  script.forEach(item => performScriptByEval(item))
+  script.forEach(item => sandBox(app, item))
 
   return app
 }
