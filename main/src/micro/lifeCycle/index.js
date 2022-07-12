@@ -7,12 +7,16 @@ export const lifeCycle = async () => {
   const preApp = findAppByRoute(window.__ORIGIN_APP__)
   // 下一个子应用
   const nextApp = findAppByRoute(window.__CURRENT_SUB_APP__)
-  
+  console.log('preApp==>>', preApp, nextApp)
   // 如果没有下一个子应用，直接返回
   if (!nextApp) return
 
   // 执行上一个子应用的销毁生命周期
-  if (preApp && preApp.destroyed) {
+  if (preApp && preApp.unmount) {
+    if (preApp.proxy) {
+      preApp.proxy.deactivated()
+    }
+
     await destroyed(preApp)
   }
 
@@ -24,23 +28,22 @@ export const lifeCycle = async () => {
 const beforeLoad = async (app) => {
   await runMainLifeCycle('beforeLoad')
   
-  app && app.beforeLoad && app.beforeLoad()
+  app && app.bootstrap && app.bootstrap()
   
   const subApp = await loadHtml(app)
   // TODO: 这里为什么还要调用 beforeLoad 方法
-  console.log('subApp', subApp, app)
-  subApp && subApp.beforeLoad && subApp.beforeLoad()
+  subApp && subApp.bootstrap && subApp.bootstrap()
 
   return subApp
 }
 
 const mounted = async (app) => {
-  app && app.mounted && app.mounted()
+  app && app.mount && app.mount()
   await runMainLifeCycle('mounted')
 }
 
 const destroyed = async (app) => {
-  app && app.destroyed && app.destroyed()
+  app && app.unmount && app.unmount()
   await runMainLifeCycle('destroyed')
 }
 
