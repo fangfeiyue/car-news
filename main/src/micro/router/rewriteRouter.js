@@ -8,5 +8,8 @@ export const rewriteRouter = () => {
   window.addEventListener('micro_push', turnApp)
   window.addEventListener('micro_replace', turnApp)
 
-  window.onpopstate = turnApp
+  // 监听返回事件
+  window.onpopstate = async function () {
+    await turnApp()
+  }
 }
