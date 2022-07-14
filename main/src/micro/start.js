@@ -23,13 +23,12 @@ export const start = () => {
   
   const app = currentApp()
   const { pathname, hash } = window.location
-
+  
   if (!hash) {
     window.history.pushState(null, null, '/vue3#/index')
   }
 
   if (app && hash) {
-    alert(1111)
     const url = pathname + hash
     
     window.__CURRENT_SUB_APP__ = app.activeRule
