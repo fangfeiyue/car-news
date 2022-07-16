@@ -1,5 +1,7 @@
 <template>
-  <main-header />
+  <main-header v-if="header.headerStatus.value" />
+  <span v-if="header.headerStatus.value">hello world</span>
+  2{{header.headerStatus.value}}1
   <bread-crumbs />
   <micro-body />
   <global-footer />
@@ -9,6 +11,7 @@ import MainHeader from '@/components/Header'
 import GlobalFooter from '@/components/Footer/index.vue'
 import MicroBody from '@/view/micro-body.vue'
 import BreadCrumbs from '@/components/BreadCrumbs'
+import { header } from './store/index'
 </script>
 <style>
 html, body, #micro_web_main_app {

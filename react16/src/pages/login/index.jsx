@@ -9,8 +9,7 @@ const Login = () => {
 
   useEffect(() => {
     const main = getMain()
-    main && app.appInfo && app.appInfo.header.changeHeader(false)
-    main && app.appInfo && app.appInfo.nav.changeNav(false)
+    main && main.appInfo && main.appInfo.header.changeHeader(false)
   }, [])
 
   return (
