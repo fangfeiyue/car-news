@@ -1,19 +1,22 @@
 export function performScriptByEval(script, appName, global) {
-  console.log('appName', appName)
+  window.proxy = global
   const scriptText = `
-    () => {
+    ((window) => {
       ${script}
-      return window[appName]
-    }
+      return window['${appName}'] 
+    })(window.proxy)
   `
-  return eval(scriptText).call(global, global)
+  return eval(scriptText)
 }
 
 export function performScriptByFunction(script, appName, global) {
+  window.proxy = global
+
   const scriptText = `
-    ${script}
-    return window['appName'] 
+    return ((window) => {
+      ${script}
+      return window['${appName}']
+    })(window.proxy)
   `
-  // TODO:为什么调用call
-  return new Function(scriptText).call(global, global)
+  return new Function(scriptText)()
 }

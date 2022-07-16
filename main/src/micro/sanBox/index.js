@@ -1,10 +1,12 @@
 import { performScriptByEval } from './performScript'
-import { SnapShortSandBox } from './snapShortSandBox'
+// import { SnapShortSandBox } from './snapShortSandBox'
+import { ProxySandbox } from './ProxySandbox' 
 
 export function sandBox(app, script) {
   window.__MICRO_WEB__ = true
 
-  const proxy = new SnapShortSandBox()
+  // const proxy = new SnapShortSandBox()
+  const proxy = new ProxySandbox()
 
   if (!app.proxy) {
     app.proxy = proxy
